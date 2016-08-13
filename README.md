@@ -1,53 +1,43 @@
 # Ember-qunit-nice-errors-issue-18
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+Demonstrates bug for https://github.com/wyeworks/ember-qunit-nice-errors/issues/18
 
-## Prerequisites
+```
+ember test --server # or just ember test
+```
 
-You will need the following things properly installed on your computer.
+Use `git log` to see what happened from
+  - `ember init` to
+  - `ember install ember-qunit-nice-errors@0.1.0` to
+  - `ember install ember-qunit-nice-errors@1.1.0`
 
-* [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (with NPM)
-* [Bower](http://bower.io/)
-* [Ember CLI](http://ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
+The actual unit test is in `tests/unit/helpers/show-bug-test.js`, which
+I reproduce here for your bug hunting pleasure:
 
-## Installation
+```
+import { module, test } from 'qunit';
 
-* `git clone <repository-url>` this repository
-* change into the new directory
-* `npm install`
-* `bower install`
+module('Unit | Helper | show bug');
 
-## Running / Development
-
-* `ember server`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
-
-### Running Tests
-
-* `ember test`
-* `ember test --server`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](http://emberjs.com/)
-* [ember-cli](http://ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
-
+test('it works with ember-qunit-nice-errors 0.1.0', function(assert) {
+  let done = assert.async();
+  assert.expect(10);
+  setTimeout(() => {
+  
+    assert.equal(true, true);
+    assert.notOk(false);
+    assert.ok(true);
+    
+    assert.equal(true, true);
+    assert.notOk(false);
+    assert.ok(true);
+    
+    assert.equal(true, true);
+    assert.notOk(false);
+    assert.ok(true);
+    
+    assert.equal('passes', 'passes');
+    done();
+  }, 0);
+});
+```
